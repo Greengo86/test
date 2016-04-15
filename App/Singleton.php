@@ -6,7 +6,10 @@ namespace App;
 
 class Singleton
 {
-    protected $instance;
+    public $counter;
+
+    protected static $instance;
+    
     protected function __construct()
     {
         
