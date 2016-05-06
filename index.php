@@ -1,15 +1,17 @@
 <?php
-/*
- * 
- */
-use App\Models\User;
-
 
 require __DIR__ . '/autoload.php';
 
-$users = \App\Models\User::findAll();
+$url = $_SERVER['REQUEST_URI'];
 
-function sendEmail(User $user, string $message)
-{
-    echo 'Почта уходит на ' . $user->email;
+$controller = new \App\Controllers\News();
+
+$action = $_GET['action'] ?: 'Index';
+
+try {
+    $controller->action($action);
+} catch (\App\Exceptions\Core $e) {
+    echo 'Возникло исключение приложения: ' . $e->getMessage();
+} catch (PDOException $e) {
+  echo 'Что-то не так с базой';
 }
